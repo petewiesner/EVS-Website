@@ -16,10 +16,10 @@ export const BUSINESS = {
    * Only list ones you actually hold; the badge appears once this has an entry.
    */
   vendorOfRecord: [] as string[],
-}
+};
 
-export const EMAIL = BUSINESS.email
-export const PRIVACY_POLICY = "/privacy-policy.pdf"
+export const EMAIL = BUSINESS.email;
+export const PRIVACY_POLICY = "/privacy-policy.pdf";
 
 export const routes = {
   home: "/",
@@ -28,7 +28,7 @@ export const routes = {
   speaking: "/speaking-engagements",
   deEscalation: "/de-escalation",
   contact: "/contact",
-} as const
+} as const;
 
 /** Contact links that prefill the form's subject line. */
 export const contactLinks = {
@@ -37,7 +37,7 @@ export const contactLinks = {
   manufacturer: `${routes.contact}?topic=manufacturer`,
   training: `${routes.contact}?topic=training`,
   speaking: `${routes.contact}?topic=speaking`,
-} as const
+} as const;
 
 export const contactTopics: Record<string, string> = {
   quote: "Request a quote",
@@ -45,35 +45,35 @@ export const contactTopics: Record<string, string> = {
   manufacturer: "Canadian distribution partnership",
   training: "Training enquiry",
   speaking: "Speaking engagement enquiry",
-}
+};
 
 export const nav = [
   { to: "/#training", label: "Training" },
-  { to: routes.technology, label: "Technology" },
+  { to: routes.technology, label: "Technology", devOnly: true },
   { to: routes.about, label: "About" },
-]
+];
 
 export interface TimelineDetail {
-  title: string
-  description: string
+  title: string;
+  description: string;
   /** Optional dates, free text so months work too, e.g. "2015" or "March 2015". */
-  start?: string
-  end?: string
+  start?: string;
+  end?: string;
 }
 
 export interface TimelineJob {
   /** Organization, e.g. "Hamilton Police Service". */
-  name: string
+  name: string;
   /** Free text, e.g. "2001" or "September 2001". */
-  start: string
-  end: string
+  start: string;
+  end: string;
   /** Optional position or rank, e.g. "Sgt. (Ret.)". */
-  position?: string
+  position?: string;
   /** Roles or milestones within the job, oldest first. */
-  details: TimelineDetail[]
+  details: TimelineDetail[];
 }
 
-export const FOUNDER_NAME = "Pete Wiesner"
+export const FOUNDER_NAME = "Pete Wiesner";
 
 /**
  * The founder's career timeline on the About page, oldest job first.
@@ -86,10 +86,27 @@ export const CAREER: TimelineJob[] = [
     end: "2024",
     position: "Sgt. (Ret.)",
     details: [
-      { title: "Uniformed Patrol Constable", description: "Where his career began, on the front line.", start: "Sept. 2001" },
-      { title: "Detective, Vice and Drugs", description: "Investigative work in vice and drug enforcement.", start: "2007", end: "2011" },
-      { title: "ACTION Team", description: "Focused on intervention, prevention, enforcement and community mobilization in Hamilton's most vulnerable neighbourhoods." },
-      { title: "Supervisor, Crisis Response Branch", description: "Leading the service's mental health crisis response to close his career." },
+      {
+        title: "Uniformed Patrol Constable",
+        description: "Where his career began, on the front line.",
+        start: "Sept. 2001",
+      },
+      {
+        title: "Detective, Vice and Drugs",
+        description: "Investigative work in vice and drug enforcement.",
+        start: "2007",
+        end: "2011",
+      },
+      {
+        title: "ACTION Team",
+        description:
+          "Focused on intervention, prevention, enforcement and community mobilization in Hamilton's most vulnerable neighbourhoods.",
+      },
+      {
+        title: "Supervisor, Crisis Response Branch",
+        description:
+          "Leading the service's mental health crisis response to close his career.",
+      },
     ],
   },
   {
@@ -98,20 +115,37 @@ export const CAREER: TimelineJob[] = [
     end: "Present",
     position: "Canadian Business Development Lead",
     details: [
-      { title: "Uniformed Patrol Constable", description: "Where his career began, on the front line.", start: "Sept. 2001" },
-      { title: "Detective, Vice and Drugs", description: "Investigative work in vice and drug enforcement.", start: "2007", end: "2011" },
-      { title: "ACTION Team", description: "Focused on intervention, prevention, enforcement and community mobilization in Hamilton's most vulnerable neighbourhoods." },
-      { title: "Supervisor, Crisis Response Branch", description: "Leading the service's mental health crisis response to close his career." },
+      {
+        title: "Uniformed Patrol Constable",
+        description: "Where his career began, on the front line.",
+        start: "Sept. 2001",
+      },
+      {
+        title: "Detective, Vice and Drugs",
+        description: "Investigative work in vice and drug enforcement.",
+        start: "2007",
+        end: "2011",
+      },
+      {
+        title: "ACTION Team",
+        description:
+          "Focused on intervention, prevention, enforcement and community mobilization in Hamilton's most vulnerable neighbourhoods.",
+      },
+      {
+        title: "Supervisor, Crisis Response Branch",
+        description:
+          "Leading the service's mental health crisis response to close his career.",
+      },
     ],
   },
-]
+];
 
 /** "2001–2024", or just "2001" when start and end are the same. */
 export const dateRange = (start?: string, end?: string) =>
-  start && end && start !== end ? `${start}–${end}` : (start ?? end ?? "")
+  start && end && start !== end ? `${start}–${end}` : (start ?? end ?? "");
 
 /** Whole years between a job's start and end (uses the 4-digit year in each). */
 export const yearsIn = (job: TimelineJob) => {
-  const year = (s: string) => Number(s.match(/\d{4}/)?.[0])
-  return year(job.end) - year(job.start)
-}
+  const year = (s: string) => Number(s.match(/\d{4}/)?.[0]);
+  return year(job.end) - year(job.start);
+};
