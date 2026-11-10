@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { Mail, MapPin, Phone } from "lucide-react"
 import { BUSINESS, PRIVACY_POLICY, contactLinks, routes } from "@/lib/site"
-import logoDark from "@/assets/Logo-Dark.svg"
+import logoDark from "@/assets/Logo-Plain-Dark.svg"
 
 const columns = [
   {
@@ -35,7 +35,8 @@ export function Footer() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div>
           <Link to={routes.home}>
-            <img src={logoDark} alt="EVS Solutions" className="h-14 w-auto" />
+              <img src={logoDark} alt="EVS Solutions" className="h-14 w-auto" />
+            
           </Link>
           <div className="mt-6 space-y-2 text-sm">
             <p className="flex items-center gap-2"><MapPin className="size-4" /> {BUSINESS.city}, {BUSINESS.province}, Canada</p>

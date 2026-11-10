@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from "react"
+import { useEffect, useState, type FormEvent } from "react"
+import { cn } from "@/lib/utils"
 import { CheckCircle2, Mail, MapPin, Phone } from "lucide-react"
 import { useSearchParams } from "react-router-dom"
 import { DevNote } from "@/components/DevNote"
@@ -13,7 +14,18 @@ import { BUSINESS, EMAIL, PRIVACY_POLICY, contactTopics } from "@/lib/site"
 export function ContactSection({ defaultSubject = "" }: { defaultSubject?: string }) {
   // /contact?topic=quote etc. prefills the subject line
   const [params] = useSearchParams()
-  const subject = contactTopics[params.get("topic") ?? ""] ?? defaultSubject
+  const topic = params.get("topic") ?? ""
+  const subject = contactTopics[topic] ?? defaultSubject
+
+  // Briefly ring the subject field when a topic prefilled it, so visitors notice it.
+  const [highlight, setHighlight] = useState(false)
+  useEffect(() => {
+    if (!contactTopics[topic]) return
+    setHighlight(true)
+    const t = setTimeout(() => setHighlight(false), 3000)
+    return () => clearTimeout(t)
+  }, [topic])
+
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
   const sent = status === "sent"
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -88,7 +100,8 @@ export function ContactSection({ defaultSubject = "" }: { defaultSubject?: strin
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="subject">Subject</Label>
-                  <Input id="subject" name="subject" required placeholder="e.g. Inquiry" key={subject} defaultValue={subject} />
+                  <Input id="subject" name="subject" required placeholder="e.g. Inquiry" key={subject} defaultValue={subject}
+                    className={cn("transition-shadow duration-500", highlight && "border-brand ring-3 ring-brand/60")} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="message">Message</Label>

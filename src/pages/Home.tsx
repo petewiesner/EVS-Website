@@ -83,7 +83,7 @@ function Hero() {
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 md:grid-cols-2 md:py-28">
         <div>
           <Badge variant="outline" className="mb-6 border-brand/30 text-brand">
-            <MapPin className="text-brand-accent" /> {BUSINESS.city}, {BUSINESS.province} · Serving agencies across Canada
+            <MapPin className="text-brand-accent" /> {BUSINESS.city}, {BUSINESS.province} • Serving agencies across Canada
           </Badge>
           <h1 className="text-4xl font-bold tracking-tight text-brand-ink md:text-5xl lg:text-6xl">
             De-escalation training and <span className="text-brand">police technology</span> for Canadian agencies.

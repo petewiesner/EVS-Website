@@ -6,8 +6,11 @@ import { CtaBand, PageHero } from "@/components/PageHero"
 import { DevNote } from "@/components/DevNote"
 import { Testimonials } from "@/components/Testimonials"
 import { ProcurementSignals } from "@/components/ProcurementSignals"
-import { BUSINESS, routes } from "@/lib/site"
+import { BUSINESS, CAREER, FOUNDER_NAME, dateRange, routes, yearsIn } from "@/lib/site"
+
+const policing = CAREER[0]
 import bulb from "@/assets/Bulb.svg"
+import headshot from "@/assets/pete-headshot.webp"
 
 const values = [
   { icon: ShieldCheck, title: "Policing first", text: "Everything we do starts from the realities of frontline police work." },
@@ -21,20 +24,25 @@ export default function About() {
     <>
       <title>About | EVS Solutions</title>
       <PageHero eyebrow="About EVS Solutions" title="Built on a career in policing">
-        EVS Solutions was founded by Pete Wiesner to bring real-world policing experience to the challenges agencies face
-        today, from mental health crisis response to the technology officers train with.
+        EVS Solutions was founded by {FOUNDER_NAME} after {yearsIn(policing)} years with the {policing.name}, to bring real-world
+        policing experience to the challenges agencies face today, from mental health crisis response to the technology
+        officers train with.
       </PageHero>
 
       <section className="py-20">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[2fr_1fr]">
           <div>
             <Eyebrow>Our founder</Eyebrow>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Pete Wiesner</h2>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">{FOUNDER_NAME}</h2>
             <div className="mt-6 space-y-4 text-muted-foreground">
               <p>
-                Pete's understanding of public safety comes from policing itself. He has seen first-hand how crisis
-                calls, trauma and mental health shape outcomes for officers and the people they serve, and how much the
-                right training changes those outcomes.
+                Pete served with the {policing.name} from {policing.start} to {policing.end}. He began in uniformed patrol, worked as a
+                detective in Vice and Drugs, served with the ACTION Team, and finished his career as supervisor of the
+                Crisis Response Branch.
+              </p>
+              <p>
+                Leading the Crisis Response Branch, he saw first-hand how crisis calls, trauma and mental health shape
+                outcomes for officers and the people they serve, and how much the right training changes those outcomes.
               </p>
               <p>
                 His own journey, from trauma survivor to advocate, made him a passionate voice for officer wellness and
@@ -47,10 +55,30 @@ export default function About() {
                 technology.
               </p>
             </div>
+            {CAREER.map((job) => (
+              <div key={job.name + job.start} className="mt-10">
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-brand">
+                  {job.name}, {dateRange(job.start, job.end)}
+                </h3>
+                <ol className="mt-5 space-y-5 border-l-2 border-brand-accent pl-6">
+                  {job.details.map((d) => (
+                    <li key={d.title} className="relative">
+                      <span className="absolute -left-7.75 top-1.5 size-3 rounded-full bg-brand ring-4 ring-background" />
+                      <p className="font-semibold text-foreground">
+                        {d.title}
+                        {(d.start || d.end) && (
+                          <span className="ml-2 text-sm font-normal text-muted-foreground">{dateRange(d.start, d.end)}</span>
+                        )}
+                      </p>
+                      <p className="text-sm text-muted-foreground">{d.description}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ))}
             <div className="mt-6">
               <DevNote>
-                add specifics of your policing career: years of service, police service(s), roles and units, and any
-                certifications (e.g. MHCR instructor). Also consider adding a professional headshot.
+                optional: add certifications (e.g. MHCR instructor) and other relevant timeline details.
               </DevNote>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -58,13 +86,26 @@ export default function About() {
               <Link to={routes.technology} className={buttonVariants({ variant: "outline" })}>Police technology</Link>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center rounded-2xl bg-brand-ink p-10 text-center text-white">
-            <img src={bulb} alt="" className="h-40 w-auto" />
-            <p className="mt-6 text-2xl font-bold">Forward Together</p>
-            <p className="mt-2 flex items-center gap-1 text-sm text-white/70">
-              <MapPin className="size-4" /> {BUSINESS.city}, {BUSINESS.province}
-            </p>
-          </div>
+          <figure className="self-start overflow-hidden rounded-2xl bg-brand-ink text-white shadow-lg lg:sticky lg:top-24">
+            <img
+              src={headshot}
+              alt={`${FOUNDER_NAME}, founder of EVS Solutions`}
+              className="aspect-square w-full object-cover"
+            />
+            <figcaption className="flex items-center gap-4 p-5">
+              <img src={bulb} alt="" className="h-10 w-auto" />
+              <div>
+                <p className="font-semibold">{FOUNDER_NAME}</p>
+                <p className="text-sm text-white/70">Director of Operations • EVS Solutions</p>
+                {[...CAREER].reverse().map((c, i) => 
+                <p key={i} className="text-[10px] text-white/50">{[c.position, c.name].filter(Boolean).join(" • ")} ({dateRange(c.start, c.end)})</p>
+                )}
+                <p className="mt-1 flex items-center gap-1 text-xs text-white/60">
+                  <MapPin className="size-3" /> {BUSINESS.city}, {BUSINESS.province}
+                </p>
+              </div>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
