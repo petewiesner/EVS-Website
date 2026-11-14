@@ -9,44 +9,24 @@ export interface Testimonial {
   name: string
   role?: string
   organization?: string
+  /** Which page it belongs on. About shows them all. */
+  section: "training" | "speaking" | "consulting"
   /** Optional link to a fuller case study. */
   caseStudyUrl?: string
-  /** Which page shows it. */
-  section: "training" | "speaking" | "consulting"
-  /**
-   * Set to true ONLY once Pete confirms the person approved the exact wording.
-   * Unapproved quotes appear in development only.
-   */
-  approved: boolean
 }
 
-// Drafts live inside the DEV branch so unapproved wording is stripped from production builds entirely.
-// When one is approved, set approved: true and move it outside the DEV branch.
-const approvedTestimonials: Testimonial[] = []
-
-export const testimonials: Testimonial[] = !import.meta.env.DEV ? approvedTestimonials : [...approvedTestimonials,
-  {
-    section: "speaking",
-    approved: false,
-    quote:
-      "Watching Pete share his real, raw story was unforgettable. He brought the whole room to the same realization: any one of us could be the person who needs to hear 'you good?', or the one who needs to ask it.",
-    name: "Mel [last name to confirm]",
-    role: "[role to confirm]",
-  },
+export const testimonials: Testimonial[] = [
   {
     section: "consulting",
-    approved: false,
     quote:
       "I brought Pete in to help with personal business matters and municipal political issues. He knows how the system really works, and he guided me to a better solution than I'd have found on my own.",
-    name: "Ian [last name to confirm]",
-    role: "[role to confirm]",
+    name: "Ian Lawson",
   },
   {
     section: "consulting",
-    approved: false,
     quote:
       "Having run for office himself, Pete brought real professionalism and insight to my campaign. His guidance helped me win Ward 9 councillor in the 2026 municipal election.",
-    name: "Jonathan Stathikos",
+    name: "Jonathan Stathakos",
     role: "Ward 9 Councillor",
   },
 ]

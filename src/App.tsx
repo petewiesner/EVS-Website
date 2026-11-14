@@ -1,12 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import Home from "@/pages/Home";
-import Technology from "@/pages/Technology";
+import Training from "@/pages/Training";
+import Distribution from "@/pages/Distribution";
+import Consulting from "@/pages/Consulting";
 import About from "@/pages/About";
 import Speaking from "@/pages/Speaking";
-import DeEscalation from "@/pages/DeEscalation";
 import Contact from "@/pages/Contact";
-import Consulting from "@/pages/Consulting";
 import { routes } from "@/lib/site";
 
 export default function App() {
@@ -15,16 +15,18 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
-          {import.meta.env.DEV && (
-            <Route path={routes.technology} element={<Technology />} />
-          )}
-          <Route path={routes.about} element={<About />} />
+          <Route path={routes.training} element={<Training />} />
           <Route path={routes.speaking} element={<Speaking />} />
-          <Route path={routes.deEscalation} element={<DeEscalation />} />
+          {/* Partnerships aren't public yet: whole distribution page is dev only */}
+          {import.meta.env.DEV && (
+            <Route path={routes.distribution} element={<Distribution />} />
+          )}
           <Route path={routes.consulting} element={<Consulting />} />
+          <Route path={routes.about} element={<About />} />
+          {/* Old URLs */}
+          <Route path="/de-escalation" element={<Navigate to={routes.training} replace />} />
+          <Route path="/speaking-engagements" element={<Navigate to={routes.speaking} replace />} />
           <Route path={routes.contact} element={<Contact />} />
-          {/* Old URL for the training page */}
-          <Route path="/de-escalation" element={<Navigate to={routes.deEscalation} replace />} />
           {/* Any unknown URL goes back to the home page */}
           <Route path="*" element={<Navigate to={routes.home} replace />} />
         </Route>

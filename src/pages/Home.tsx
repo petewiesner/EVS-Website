@@ -1,414 +1,161 @@
-import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Award,
-  Boxes,
-  Factory,
-  HandHeart,
-  Handshake,
-  Lightbulb,
-  MapPin,
-  Mic,
-  ShieldCheck,
-  Target,
-  Users,
-} from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Eyebrow } from "@/components/Eyebrow";
-import { ContactSection } from "@/components/ContactSection";
-import { ProcurementSignals } from "@/components/ProcurementSignals";
-import { BUSINESS, contactLinks, routes } from "@/lib/site";
-import { manufacturers } from "@/lib/manufacturers";
-import logo from "@/assets/Logo.svg";
-import bulb from "@/assets/Bulb.svg";
-import DevOnly, { devOr } from "@/components/DevOnly";
-import React from "react";
+import { Link } from "react-router-dom"
+import { ArrowRight, Boxes, Briefcase, MapPin, Mic, ShieldCheck, type LucideIcon } from "lucide-react"
+import { buttonVariants } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Eyebrow } from "@/components/Eyebrow"
+import { ContactSection } from "@/components/ContactSection"
+import { BUSINESS, FOUNDER_NAME, routes } from "@/lib/site"
+import bulb from "@/assets/Bulb.svg"
+import headshot from "@/assets/pete-headshot.webp"
 
-const trainingServices: { icon: typeof ShieldCheck; title: string; text: string; to: string; devOnly?: boolean }[] = [
+interface Topic {
+  icon: LucideIcon
+  title: string
+  text: string
+  to: string
+}
+
+/** Pete's four sections, in brief order. Distribution is dev-only (partnerships not public yet). */
+const topics: Topic[] = [
   {
     icon: ShieldCheck,
-    title: "Mental Health Crisis Training",
-    text: "In-person crisis and de-escalation training for police, fire, security and mental health teams, built around the calls they actually face.",
-    to: routes.deEscalation,
+    title: "Training",
+    text: "In-person mental health crisis and de-escalation training for your front line.",
+    to: routes.training,
   },
   {
     icon: Mic,
-    title: "You Good? Keynote",
-    text: "A raw, honest talk on first responder mental health and suicide awareness, delivered to thousands across Canada, the U.S. and beyond.",
+    title: "Public Speaking",
+    text: "You Good? A raw, honest talk on first responder mental health and suicide awareness.",
     to: routes.speaking,
   },
+  ...(import.meta.env.DEV
+    ? [
+        {
+          icon: Boxes,
+          title: "Distribution",
+          text: "Proven training technology for Canadian police and public safety agencies.",
+          to: routes.distribution,
+        },
+      ]
+    : []),
   {
-    icon: Handshake,
+    icon: Briefcase,
     title: "Consulting",
-    text: "Strategic advice for public safety and security organizations, plus non-partisan campaign and fundraising guidance.",
+    text: "Strategic advice on crisis programs, security teams and public leadership.",
     to: routes.consulting,
   },
-];
+]
 
-const approach = [
-  {
-    n: "01",
-    icon: ShieldCheck,
-    title: "Policing Transformation",
-    text: "We work closely with police services to implement progressive strategies that build trust, enhance accountability and promote community-oriented policing. From procedural reforms to training initiatives, we help agencies adapt to modern challenges while upholding the highest standards of professionalism and integrity.",
-    note: "Policing legislation is changing across Canada. In Ontario, the Community Safety and Policing Act (CSPA) came into force on April 1, 2024. We help services in Ontario and other provinces understand their new requirements and build a tailored plan for compliance.",
-  },
-  {
-    n: "02",
-    icon: HandHeart,
-    title: "Mental Health Support",
-    text: "Recognizing the complex relationship between law enforcement and mental health, we provide training and resources that equip frontline workers to interact effectively with individuals in crisis. Our evidence-based programs promote empathy, de-escalation and collaboration for positive outcomes for officers and community members alike.",
-  },
-  {
-    n: "03",
-    icon: Users,
-    title: "Community Partnerships",
-    text: "Strong partnerships create safer, more resilient communities. Through strategic collaboration with government agencies, nonprofits and advocacy groups, we facilitate meaningful dialogue, identify shared goals and develop sustainable solutions that address the root causes of crime and social inequality.",
-  },
-];
-
-const reasons = [
-  {
-    icon: Award,
-    title: "Real-world policing experience",
-    text: "Expertise across policing, crisis response, and community engagement.",
-  },
-  {
-    icon: Target,
-    title: "Customized support",
-    text: "Training and strategies tailored to your organization's realities.",
-  },
-  {
-    icon: MapPin,
-    title: "Canadian and local",
-    text: `An ${BUSINESS.province}-based partner who understands Canadian policing and procurement.`,
-  },
-  {
-    icon: Lightbulb,
-    title: "One point of contact",
-    text: "Training expertise and technology supply from the same trusted partner.",
-    devOnly: true,
-  },
-];
-
-function Hero() {
+function TopicCard({ icon: Icon, title, text, to }: Topic) {
   return (
-    <section id="top" className="relative overflow-hidden">
-      <div className="absolute -right-32 -top-32 size-[28rem] rounded-full bg-brand-accent/20 blur-3xl" />
-      <div className="absolute -bottom-40 -left-32 size-[28rem] rounded-full bg-brand/10 blur-3xl" />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 md:grid-cols-2 md:py-28">
-        <div>
-          <Badge variant="outline" className="mb-6 border-brand/30 text-brand">
-            <MapPin className="text-brand-accent" /> {BUSINESS.city},{" "}
-            {BUSINESS.province} • Serving agencies across Canada
-          </Badge>
-          <DevOnly
-            hideNote
-            fallback={
-              <>
-                <h1 className="text-4xl font-bold tracking-tight text-brand-ink md:text-5xl lg:text-6xl">
-                  De-escalation and crisis training for{" "}
-                  <span className="text-brand">Canadian police services.</span>
-                </h1>
-                <p className="mt-6 max-w-lg text-lg text-muted-foreground">
-                  EVS Solutions delivers mental health and de-escalation
-                  training, speaking and policing consulting, built on more than
-                  30 years of law enforcement and crisis response.
-                </p>
-              </>
-            }
-          >
-            <h1 className="text-4xl font-bold tracking-tight text-brand-ink md:text-5xl lg:text-6xl">
-              Training and <span className="text-brand">technology</span> for
-              Canadian police services.
-            </h1>
-            <p className="mt-6 max-w-lg text-lg text-muted-foreground">
-              The equipment your officers train with, plus real policing and
-              crisis training to go with it. EVS Solutions delivers
-              de-escalation and mental health training, speaking and policing
-              consulting, and is the Canadian distribution partner for police
-              technology.
-            </p>
-          </DevOnly>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/#training" className={buttonVariants({ size: "lg" })}>
-              Training and consulting <ArrowRight />
-            </Link>
-            <DevOnly>
-              <Link
-                to={routes.technology}
-                className={buttonVariants({ size: "lg", variant: "outline" })}
-              >
-                Police technology
-              </Link>
-            </DevOnly>
-          </div>
-        </div>
-        <div className="flex justify-center">
-          <img
-            src={logo}
-            alt="EVS Solutions: Forward Together"
-            className="w-full max-w-md"
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Training() {
-  return (
-    <section id="training" className="scroll-mt-16 bg-muted/40 py-20">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="max-w-3xl">
-          <Eyebrow>What we do</Eyebrow>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
-            Expertise where policing meets mental health
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            We understand the critical intersection between policing, mental
-            health, and community engagement, and offer practical solutions for
-            law enforcement agencies, mental health organizations, and
-            communities.
-          </p>
-        </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {trainingServices.map(({ icon: Icon, title, text, to, devOnly }) => {
-            const Wrapper = devOnly ? DevOnly : React.Fragment;
-            return (
-              <Wrapper key={title}>
-                <Link to={to} className="group">
-                  <Card className="h-full transition-shadow group-hover:shadow-lg">
-                    <CardHeader>
-                      <div className="mb-3 flex size-12 items-center justify-center rounded-lg bg-brand/10 text-brand">
-                        <Icon className="size-6" />
-                      </div>
-                      <CardTitle className="text-xl">{title}</CardTitle>
-                      <CardDescription className="text-base">
-                        {text}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardFooter className="mt-auto text-sm font-medium text-brand">
-                      Learn more{" "}
-                      <ArrowRight className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
-                    </CardFooter>
-                  </Card>
-                </Link>
-              </Wrapper>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Technology() {
-  return (
-    <section
-      id="technology"
-      className="scroll-mt-16 bg-brand-ink py-20 text-white"
+    <Link
+      to={to}
+      className="group flex gap-4 rounded-2xl border bg-background p-5 shadow-sm transition-shadow hover:shadow-lg"
     >
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="grid gap-12 lg:grid-cols-2">
-          <div>
-            <Eyebrow light>Police technology distribution</Eyebrow>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
-              A Canadian home for proven police technology
-            </h2>
-            <p className="mt-4 text-white/70">
-              Many police technology companies have no Canadian footprint. EVS
-              Solutions is their Canadian distribution partner, so agencies here
-              can buy locally, through formal quotes and purchase orders, with a
-              Canadian contact for setup and support.
-            </p>
-            <p className="mt-4 text-white/70">
-              Unlike a reseller, we pair the equipment with real policing and
-              crisis training, so your officers get the most out of it from day
-              one.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to={routes.technology}
-                className={buttonVariants({ size: "lg", variant: "secondary" })}
-              >
-                View technology <ArrowRight />
-              </Link>
-              <Link
-                to={contactLinks.quote}
-                className={buttonVariants({
-                  size: "lg",
-                  variant: "outline",
-                  className:
-                    "border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white",
-                })}
-              >
-                Request a quote
-              </Link>
-            </div>
-          </div>
-          <div className="grid gap-4">
-            {manufacturers.map((m) => (
-              <Link
-                key={m.id}
-                to={`${routes.technology}#${m.id}`}
-                className="group flex gap-4 rounded-xl bg-white/5 p-5 ring-1 ring-white/10 transition-colors hover:bg-white/10"
-              >
-                <Boxes className="mt-0.5 size-6 shrink-0 text-brand-accent" />
-                <div>
-                  <p className="font-semibold">
-                    {m.name}
-                    {m.shortName ? ` (${m.shortName})` : ""}
-                  </p>
-                  <p className="mt-1 text-sm text-white/70">{m.summary}</p>
-                </div>
-                <ArrowRight className="ml-auto size-5 shrink-0 self-center text-white/50 transition-transform group-hover:translate-x-1" />
-              </Link>
-            ))}
-            <Link
-              to={contactLinks.manufacturer}
-              className="group flex gap-4 rounded-xl border border-dashed border-white/20 p-5 transition-colors hover:bg-white/5"
-            >
-              <Factory className="mt-0.5 size-6 shrink-0 text-white/60" />
-              <div>
-                <p className="font-semibold">Manufacturers</p>
-                <p className="mt-1 text-sm text-white/70">
-                  Looking for a Canadian distribution partner? Let's talk.
-                </p>
-              </div>
-              <ArrowRight className="ml-auto size-5 shrink-0 self-center text-white/50 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </div>
+      <div className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+        <Icon className="size-5" />
       </div>
-    </section>
-  );
+      <div>
+        <p className="flex items-center gap-1 font-semibold">
+          {title}
+          <ArrowRight className="size-4 text-brand transition-transform group-hover:translate-x-1" />
+        </p>
+        <p className="mt-1 text-sm text-muted-foreground">{text}</p>
+      </div>
+    </Link>
+  )
 }
 
-function Approach() {
+/** The bulb in the centre with the topics evenly spaced around it (stacked list on small screens). */
+function TopicHub() {
+  const n = topics.length
+  const start = -90 - 180 / n // 3 topics: top-left, top-right, bottom. 4: the four corners.
   return (
-    <section id="approach" className="scroll-mt-16 py-20">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="max-w-2xl">
-          <Eyebrow>Our approach</Eyebrow>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
-            Collaborative. Practical. Human-centred.
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            Our focus is always on practical implementation, ensuring the work
-            we do together leads to measurable improvements and long-term
-            impact.
-          </p>
-        </div>
-        <div className="mt-12 grid gap-8 lg:grid-cols-3">
-          {approach.map(({ n, icon: Icon, title, text, note }) => (
+    <>
+      <div className="relative mx-auto hidden h-[540px] max-w-5xl lg:block">
+        <div className="absolute left-1/2 top-1/2 size-80 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-dashed border-brand/20" />
+        <div className="absolute left-1/2 top-1/2 size-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent/20 blur-2xl" />
+        <img
+          src={bulb}
+          alt=""
+          className="absolute left-1/2 top-1/2 h-44 -translate-x-1/2 -translate-y-1/2"
+        />
+        {topics.map((t, i) => {
+          // With 4, swap the bottom two so the cards read left-to-right in brief order.
+          const slot = n === 4 && i >= 2 ? 5 - i : i
+          const a = ((start + (360 / n) * slot) * Math.PI) / 180
+          return (
             <div
-              key={n}
-              className="flex flex-col border-t-2 border-brand-accent pt-5"
+              key={t.title}
+              className="absolute w-80 -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${50 + 36 * Math.cos(a)}%`, top: `${50 + 40 * Math.sin(a)}%` }}
             >
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-bold text-brand">{n}</span>
-                <Icon className="size-5 text-brand" />
-              </div>
-              <h3 className="mt-2 text-xl font-semibold">{title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                {text}
-              </p>
-              {note && (
-                <p className="mt-4 rounded-md bg-brand-accent/15 p-3 text-sm text-brand-ink">
-                  {note}
-                </p>
-              )}
+              <TopicCard {...t} />
             </div>
-          ))}
-        </div>
+          )
+        })}
       </div>
-    </section>
-  );
-}
-
-function Why() {
-  return (
-    <section id="why" className="scroll-mt-16 bg-muted/40 py-20">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 md:grid-cols-[1fr_2fr]">
-        <img src={bulb} alt="" className="mx-auto h-48 w-auto md:h-64" />
-        <div>
-          <Eyebrow>Why choose EVS Solutions?</Eyebrow>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
-            Experience you can trust
-          </h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            {reasons.map(({ icon: Icon, title, text, devOnly }) => {
-              const Wrapper = devOnly ? DevOnly : React.Fragment;
-              return (
-                <Wrapper key={title}>
-                  <div className="flex gap-4">
-                    <Icon className="mt-0.5 size-6 shrink-0 text-brand" />
-                    <div>
-                      <h3 className="font-semibold">{title}</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {text}
-                      </p>
-                    </div>
-                  </div>
-                </Wrapper>
-              );
-            })}
-          </div>
-          <Link
-            to={routes.about}
-            className="mt-8 inline-flex items-center gap-1 text-sm font-medium text-brand hover:underline"
-          >
-            About EVS Solutions <ArrowRight className="size-4" />
-          </Link>
-        </div>
+      <div className="grid gap-4 lg:hidden">
+        <img src={bulb} alt="" className="mx-auto mb-2 h-28" />
+        {topics.map((t) => (
+          <TopicCard key={t.title} {...t} />
+        ))}
       </div>
-    </section>
-  );
-}
-
-function Procurement() {
-  return (
-    <section className="py-16">
-      <div className="mx-auto max-w-6xl px-4">
-        <Eyebrow>Buying from EVS Solutions</Eyebrow>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight md:text-3xl">
-          Built for public-sector procurement
-        </h2>
-        <ProcurementSignals className="mt-8" />
-      </div>
-    </section>
-  );
+    </>
+  )
 }
 
 export default function Home() {
   return (
     <>
-      <title>
-        {devOr(
-          "Police Training Technology & De-Escalation Training | EVS Solutions Canada",
-          "De-Escalation & Police Training | EVS Solutions Canada",
-        )}
-      </title>
-      <Hero />
-      <Training />
-      <DevOnly>
-        <Technology />
-      </DevOnly>
-      <Approach />
-      <Why />
-      <DevOnly>
-        <Procurement />
-      </DevOnly>
+      <title>EVS Solutions | Mental Health Crisis Training & Speaking in Ontario</title>
+
+      <section className="relative overflow-hidden">
+        <div className="absolute -right-32 -top-32 size-[28rem] rounded-full bg-brand-accent/20 blur-3xl" />
+        <div className="relative mx-auto max-w-4xl px-4 pb-8 pt-20 text-center md:pt-24">
+          <Badge variant="outline" className="mb-6 border-brand/30 text-brand">
+            <MapPin className="text-brand-accent" /> {BUSINESS.city}, {BUSINESS.province}
+          </Badge>
+          <h1 className="text-4xl font-bold tracking-tight text-brand-ink md:text-5xl lg:text-6xl">
+            30 years on the front line, <span className="text-brand">now working for yours.</span>
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
+            Retired Hamilton Police Sergeant {FOUNDER_NAME} helps frontline teams handle mental health crises safely and
+            with compassion.
+          </p>
+        </div>
+      </section>
+
+      <section id="services" className="scroll-mt-16 pb-20 pt-4">
+        <div className="mx-auto max-w-6xl px-4">
+          <TopicHub />
+        </div>
+      </section>
+
+      <section className="bg-muted/40 py-16">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 px-4 md:grid-cols-[1fr_2fr]">
+          <img
+            src={headshot}
+            alt={`${FOUNDER_NAME}, founder of EVS Solutions`}
+            className="mx-auto aspect-square w-56 rounded-2xl object-cover shadow-lg"
+          />
+          <div>
+            <Eyebrow>Meet the founder</Eyebrow>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight">{FOUNDER_NAME}</h2>
+            <p className="mt-3 text-muted-foreground">
+              CIT International Master Trainer, Laurier MHCR cadre instructor and recognized subject matter expert in
+              mental health and de-escalation. Pete has trained thousands of frontline professionals and spoken to
+              audiences across North America and Europe.
+            </p>
+            <Link to={routes.about} className={buttonVariants({ variant: "outline", className: "mt-6" })}>
+              About Pete <ArrowRight />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <ContactSection />
     </>
-  );
+  )
 }

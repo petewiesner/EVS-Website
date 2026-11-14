@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Eyebrow } from "@/components/Eyebrow"
-import { BUSINESS, EMAIL, PRIVACY_POLICY, contactPrompts, contactTopics } from "@/lib/site"
+import { BUSINESS, EMAIL, PRIVACY_POLICY, contactTopics } from "@/lib/site"
 
 export function ContactSection({ defaultSubject = "" }: { defaultSubject?: string }) {
   // /contact?topic=quote etc. prefills the subject line
@@ -52,9 +52,8 @@ export function ContactSection({ defaultSubject = "" }: { defaultSubject?: strin
           <Eyebrow>Contact</Eyebrow>
           <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Let's start the conversation</h2>
           <p className="mt-4 text-muted-foreground">
-            Whether you're looking for specialized training, a keynote speaker, policing or campaign strategy
-            {import.meta.env.DEV ? ", a product demo or a formal quote" : ""}, EVS Solutions is ready to partner with
-            you.
+            Whether you're looking for specialized training, a keynote speaker, strategic guidance, a product demo or a
+            formal quote, EVS Solutions is ready to partner with you.
           </p>
           <div className="mt-8 space-y-4 text-sm font-medium">
             <a href={`mailto:${EMAIL}`} className="flex items-center gap-3 hover:text-brand">
@@ -106,7 +105,7 @@ export function ContactSection({ defaultSubject = "" }: { defaultSubject?: strin
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="message">Message</Label>
-                  <Textarea id="message" name="message" rows={5} required placeholder={contactPrompts[topic] ?? "Enter your message here..."} />
+                  <Textarea id="message" name="message" rows={5} required placeholder="Enter your message here..." />
                 </div>
                 <label className="flex items-center gap-2 text-sm text-muted-foreground">
                   <input type="checkbox" required className="size-4 accent-[#0073cc]" />

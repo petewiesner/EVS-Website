@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom"
-import { ArrowRight, BadgeCheck, Boxes, HeartHandshake, MapPin, ShieldCheck, Award } from "lucide-react"
+import { ArrowRight, BadgeCheck, Boxes, HeartHandshake, MapPin, ShieldCheck } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
 import { Eyebrow } from "@/components/Eyebrow"
 import { CtaBand, PageHero } from "@/components/PageHero"
 import { DevNote } from "@/components/DevNote"
+import { Testimonials } from "@/components/Testimonials"
+import DevOnly from "@/components/DevOnly"
 import { ProcurementSignals } from "@/components/ProcurementSignals"
-import { BUSINESS, CAREER, FOUNDER_NAME, RECOGNITION, dateRange, routes, visibleCareer } from "@/lib/site"
-import DevOnly, { devOr } from "@/components/DevOnly"
+import { AWARDS, BUSINESS, CAREER, FOUNDER_NAME, dateRange, routes, yearsIn } from "@/lib/site"
 
 const policing = CAREER[0]
 import bulb from "@/assets/Bulb.svg"
@@ -24,9 +25,8 @@ export default function About() {
     <>
       <title>About | EVS Solutions</title>
       <PageHero eyebrow="About EVS Solutions" title="Built on a career in policing">
-        EVS Solutions was founded by {FOUNDER_NAME}, a retired {policing.name} Sergeant with 30 years of law enforcement
-        experience, to bring real-world policing experience to the challenges agencies face today, from mental health crisis response to{" "}
-        {devOr("the technology officers train with.", "officer wellness.")}
+        EVS Solutions was founded by {FOUNDER_NAME} after {yearsIn(policing)} years with the {policing.name}, to bring real-world
+        policing experience to the people who respond to crisis every day.
       </PageHero>
 
       <section className="py-20">
@@ -50,27 +50,11 @@ export default function About() {
                 and vital lesson: it's okay to ask, "YOU GOOD?"
               </p>
               <p>
-                In 2023 he stepped forward as a candidate for provincial office in Hamilton Centre.
-                The campaign gave him first-hand experience in building a team, fundraising and political strategy,
-                and he has stayed involved in election campaigns since.
+                Today, EVS Solutions brings that experience to frontline teams through mental health crisis training, the
+                You Good? presentation and strategic consulting.
               </p>
-              <DevOnly
-                hideNote
-                fallback={
-                  <p>
-                    Today, EVS Solutions brings that experience to agencies and organizations through de-escalation and
-                    mental health training, speaking, policing consulting, and campaign and political strategy.
-                  </p>
-                }
-              >
-                <p>
-                  Today, EVS Solutions brings that experience to agencies in two ways: de-escalation and mental health
-                  training, speaking and consulting, and supplying Canadian agencies with proven police training
-                  technology.
-                </p>
-              </DevOnly>
             </div>
-            {visibleCareer().map((job) => (
+            {CAREER.map((job) => (
               <div key={job.name + job.start} className="mt-10">
                 <h3 className="text-sm font-semibold uppercase tracking-wider text-brand">
                   {job.name}, {dateRange(job.start, job.end)}
@@ -92,16 +76,13 @@ export default function About() {
               </div>
             ))}
             <div className="mt-6">
-              <DevNote>
+              {import.meta.env.DEV && <DevNote>
                 optional: add certifications (e.g. MHCR instructor) and other relevant timeline details.
-              </DevNote>
+              </DevNote>}
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to={routes.speaking} className={buttonVariants()}>You Good? keynote <ArrowRight /></Link>
-              <Link to={routes.consulting} className={buttonVariants({ variant: "outline" })}>Consulting</Link>
-              <DevOnly hideNote>
-                <Link to={routes.technology} className={buttonVariants({ variant: "outline" })}>Police technology</Link>
-              </DevOnly>
+              <Link to={routes.training} className={buttonVariants()}>Training <ArrowRight /></Link>
+              <Link to={routes.speaking} className={buttonVariants({ variant: "outline" })}>You Good?</Link>
             </div>
           </div>
           <figure className="self-start overflow-hidden rounded-2xl bg-brand-ink text-white shadow-lg lg:sticky lg:top-24">
@@ -115,7 +96,7 @@ export default function About() {
               <div>
                 <p className="font-semibold">{FOUNDER_NAME}</p>
                 <p className="text-sm text-white/70">Founder & Principal Consultant • EVS Solutions</p>
-                {[...visibleCareer()].reverse().map((c, i) => 
+                {[...CAREER].reverse().map((c, i) => 
                 <p key={i} className="text-[10px] text-white/50">{[c.position, c.name].filter(Boolean).join(" • ")} ({dateRange(c.start, c.end)})</p>
                 )}
                 <p className="mt-1 flex items-center gap-1 text-xs text-white/60">
@@ -124,20 +105,6 @@ export default function About() {
               </div>
             </figcaption>
           </figure>
-        </div>
-      </section>
-
-      <section className="py-16">
-        <div className="mx-auto max-w-6xl px-4">
-          <Eyebrow>Recognition</Eyebrow>
-          <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-            {RECOGNITION.map((a) => (
-              <li key={a.title} className="flex gap-3 text-sm">
-                <Award className="size-5 shrink-0 text-brand" />
-                <span><span className="font-medium">{a.title}</span>{a.year && <span className="text-muted-foreground"> ({a.year})</span>}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
@@ -157,16 +124,26 @@ export default function About() {
         </div>
       </section>
 
+      <Testimonials />
 
       <section className="py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <Eyebrow>Recognition</Eyebrow>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+            {AWARDS.map((a) => <li key={a} className="rounded-lg border p-4 text-sm">{a}</li>)}
+          </ul>
+        </div>
+      </section>
+
+      {import.meta.env.DEV && <DevOnly><section className="py-16">
         <div className="mx-auto max-w-6xl px-4">
           <Eyebrow>The company</Eyebrow>
           <h2 className="mt-2 text-2xl font-bold tracking-tight">Working with EVS Solutions</h2>
           <ProcurementSignals className="mt-8" />
         </div>
-      </section>
+      </section></DevOnly>}
 
-      <CtaBand title="Let's work together" text={`Training, speaking, consulting${import.meta.env.DEV ? " or technology" : " or campaign strategy"}: tell us what you need.`} to={routes.contact} label="Get in touch" />
+      <CtaBand title="Let's work together" text="Training, speaking or consulting: tell us what you need." to={routes.contact} label="Get in touch" />
     </>
   )
 }
