@@ -35,10 +35,10 @@ const included = [
 ]
 
 const steps = [
-  { icon: CalendarCheck, title: "Book a demo", text: "See the technology in action with your team." },
-  { icon: ClipboardList, title: "Formal quote", text: "An itemized written quote for your approval process." },
-  { icon: FileCheck2, title: "Purchase order", text: "Order through your agency's standard PO process." },
-  { icon: PackageCheck, title: "Delivery and setup", text: "We deliver, set up and train your operators." },
+  { icon: ClipboardList, title: "Needs assessment", text: "We learn about your team, your calls and your goals." },
+  { icon: CalendarCheck, title: "Demonstration", text: "See the technology in action with your own people." },
+  { icon: FileCheck2, title: "Procurement support", text: "We help you through formal quotes, purchase orders and your agency's purchasing process." },
+  { icon: PackageCheck, title: "Training and support", text: "After delivery, we make sure your team is confident using it, backed by real frontline training experience." },
 ]
 
 const faqs = [
@@ -123,8 +123,7 @@ function ManufacturerSection({ m, index }: { m: Manufacturer; index: number }) {
               </CardHeader>
             </Card>
             <div className="flex flex-wrap gap-3">
-              <Link to={contactLinks.demo} className={buttonVariants({ size: "lg" })}>Book a demo</Link>
-              <Link to={contactLinks.quote} className={buttonVariants({ size: "lg", variant: "outline" })}>Request a quote</Link>
+              <Link to={contactLinks.quote} className={buttonVariants({ size: "lg" })}>Request a quote or demo</Link>
             </div>
             <a href={m.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-brand">
               Manufacturer website <ExternalLink className="size-3.5" />
@@ -133,7 +132,7 @@ function ManufacturerSection({ m, index }: { m: Manufacturer; index: number }) {
         </div>
         {m.id === "ssvr" && (
           <div className="mt-8">
-            <DevNote>confirm with SSVR the exact operator training, setup and support you will provide, and get their OK to use their name and the "50+ agencies" figure.</DevNote>
+            <DevNote>get written permission from SSVR to use their name, logo, product photos and the "50+ agencies" figure, and consent from anyone shown in training photos.</DevNote>
           </div>
         )}
       </div>
@@ -145,9 +144,10 @@ export default function Technology() {
   return (
     <>
       <title>Police Technology Distribution in Canada | EVS Solutions</title>
-      <PageHero eyebrow="Police technology" title="Proven police technology, supplied by a Canadian partner">
-        EVS Solutions is the Canadian distribution partner for police technology companies without a Canadian footprint.
-        Agencies buy locally through formal quotes and purchase orders, with Canadian setup and support.
+      <PageHero eyebrow="Distribution" title="Proven technology for Canadian public safety">
+        EVS Solutions connects Canadian police services and public safety agencies with technology that helps frontline
+        teams train smarter and work safer. Backed by 30 years of law enforcement experience, we understand how agencies
+        operate, what they need and how they buy. We don't just deliver equipment; we help your team put it to work.
       </PageHero>
 
       <section className="py-16">
@@ -172,7 +172,7 @@ export default function Technology() {
       <section className="py-20">
         <div className="mx-auto max-w-6xl px-4">
           <Eyebrow>How buying works</Eyebrow>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">From demo to day one</h2>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">How it works</h2>
           <div className="mt-12 grid gap-8 md:grid-cols-4">
             {steps.map(({ icon: Icon, title, text }, i) => (
               <div key={title} className="border-t-2 border-brand-accent pt-5">
@@ -210,15 +210,16 @@ export default function Technology() {
             <div className="flex gap-4">
               <Factory className="size-8 shrink-0 text-brand" />
               <div>
-                <h2 className="text-xl font-bold">Are you a police technology manufacturer?</h2>
+                <h2 className="text-xl font-bold">Partner with us</h2>
                 <p className="mt-1 text-muted-foreground">
-                  If you have no Canadian presence, we can be your Canadian distribution partner: local sales, quoting,
-                  delivery and support.
+                  Are you a public safety technology company looking to reach Canadian agencies? EVS Solutions offers a
+                  trusted path into the Canadian market, combining deep relationships across policing and public safety
+                  with firsthand knowledge of how agencies evaluate and adopt new tools.
                 </p>
               </div>
             </div>
             <Link to={contactLinks.manufacturer} className={buttonVariants({ size: "lg", variant: "outline" })}>
-              Talk to us <ArrowRight />
+              Become a partner <ArrowRight />
             </Link>
           </div>
         </div>

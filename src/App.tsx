@@ -6,6 +6,7 @@ import About from "@/pages/About";
 import Speaking from "@/pages/Speaking";
 import DeEscalation from "@/pages/DeEscalation";
 import Contact from "@/pages/Contact";
+import Consulting from "@/pages/Consulting";
 import { routes } from "@/lib/site";
 
 export default function App() {
@@ -20,7 +21,10 @@ export default function App() {
           <Route path={routes.about} element={<About />} />
           <Route path={routes.speaking} element={<Speaking />} />
           <Route path={routes.deEscalation} element={<DeEscalation />} />
+          <Route path={routes.consulting} element={<Consulting />} />
           <Route path={routes.contact} element={<Contact />} />
+          {/* Old URL for the training page */}
+          <Route path="/de-escalation" element={<Navigate to={routes.deEscalation} replace />} />
           {/* Any unknown URL goes back to the home page */}
           <Route path="*" element={<Navigate to={routes.home} replace />} />
         </Route>

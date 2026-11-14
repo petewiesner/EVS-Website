@@ -25,33 +25,31 @@ import {
 import { Eyebrow } from "@/components/Eyebrow";
 import { ContactSection } from "@/components/ContactSection";
 import { ProcurementSignals } from "@/components/ProcurementSignals";
-import { Testimonials } from "@/components/Testimonials";
 import { BUSINESS, contactLinks, routes } from "@/lib/site";
 import { manufacturers } from "@/lib/manufacturers";
 import logo from "@/assets/Logo.svg";
 import bulb from "@/assets/Bulb.svg";
-import DevOnly from "@/components/DevOnly";
+import DevOnly, { devOr } from "@/components/DevOnly";
 import React from "react";
 
-const trainingServices = [
+const trainingServices: { icon: typeof ShieldCheck; title: string; text: string; to: string; devOnly?: boolean }[] = [
   {
     icon: ShieldCheck,
-    title: "De-Escalation Training",
-    text: "Practical crisis intervention training, based on the Memphis Model, that prepares frontline professionals for real-world crisis situations.",
+    title: "Mental Health Crisis Training",
+    text: "In-person crisis and de-escalation training for police, fire, security and mental health teams, built around the calls they actually face.",
     to: routes.deEscalation,
   },
   {
     icon: Mic,
-    title: "Speaking Engagements",
-    text: "Authentic, experience-driven talks on trauma, resilience and mental health for conferences, agencies and communities.",
+    title: "You Good? Keynote",
+    text: "A raw, honest talk on first responder mental health and suicide awareness, delivered to thousands across Canada, the U.S. and beyond.",
     to: routes.speaking,
   },
   {
     icon: Handshake,
-    title: "Policing Consulting",
-    text: "Guidance on policing transformation, mental health response and community partnerships, including CSPA compliance.",
-    to: "/#approach",
-    devOnly: true,
+    title: "Consulting",
+    text: "Strategic advice for public safety and security organizations, plus non-partisan campaign and fundraising guidance.",
+    to: routes.consulting,
   },
 ];
 
@@ -61,7 +59,7 @@ const approach = [
     icon: ShieldCheck,
     title: "Policing Transformation",
     text: "We work closely with police services to implement progressive strategies that build trust, enhance accountability and promote community-oriented policing. From procedural reforms to training initiatives, we help agencies adapt to modern challenges while upholding the highest standards of professionalism and integrity.",
-    note: "Ontario's Community Safety and Policing Act (CSPA) came into force on April 1, 2024, and changed key legislation. We help services understand the new requirements and build a tailored plan for compliance.",
+    note: "Policing legislation is changing across Canada. In Ontario, the Community Safety and Policing Act (CSPA) came into force on April 1, 2024. We help services in Ontario and other provinces understand their new requirements and build a tailored plan for compliance.",
   },
   {
     n: "02",
@@ -112,16 +110,34 @@ function Hero() {
             <MapPin className="text-brand-accent" /> {BUSINESS.city},{" "}
             {BUSINESS.province} • Serving agencies across Canada
           </Badge>
-          <h1 className="text-4xl font-bold tracking-tight text-brand-ink md:text-5xl lg:text-6xl">
-            De-escalation training and{" "}
-            <span className="text-brand">police technology</span> for Canadian
-            agencies.
-          </h1>
-          <p className="mt-6 max-w-lg text-lg text-muted-foreground">
-            EVS Solutions delivers mental health and de-escalation training,
-            speaking and policing consulting, and is the Canadian distribution
-            partner for police training technology.
-          </p>
+          <DevOnly
+            hideNote
+            fallback={
+              <>
+                <h1 className="text-4xl font-bold tracking-tight text-brand-ink md:text-5xl lg:text-6xl">
+                  De-escalation and crisis training for{" "}
+                  <span className="text-brand">Canadian police services.</span>
+                </h1>
+                <p className="mt-6 max-w-lg text-lg text-muted-foreground">
+                  EVS Solutions delivers mental health and de-escalation
+                  training, speaking and policing consulting, built on more than
+                  30 years of law enforcement and crisis response.
+                </p>
+              </>
+            }
+          >
+            <h1 className="text-4xl font-bold tracking-tight text-brand-ink md:text-5xl lg:text-6xl">
+              Training and <span className="text-brand">technology</span> for
+              Canadian police services.
+            </h1>
+            <p className="mt-6 max-w-lg text-lg text-muted-foreground">
+              The equipment your officers train with, plus real policing and
+              crisis training to go with it. EVS Solutions delivers
+              de-escalation and mental health training, speaking and policing
+              consulting, and is the Canadian distribution partner for police
+              technology.
+            </p>
+          </DevOnly>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/#training" className={buttonVariants({ size: "lg" })}>
               Training and consulting <ArrowRight />
@@ -153,7 +169,7 @@ function Training() {
     <section id="training" className="scroll-mt-16 bg-muted/40 py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="max-w-3xl">
-          <Eyebrow>Training and consulting</Eyebrow>
+          <Eyebrow>What we do</Eyebrow>
           <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
             Expertise where policing meets mental health
           </h2>
@@ -213,6 +229,11 @@ function Technology() {
               Solutions is their Canadian distribution partner, so agencies here
               can buy locally, through formal quotes and purchase orders, with a
               Canadian contact for setup and support.
+            </p>
+            <p className="mt-4 text-white/70">
+              Unlike a reseller, we pair the equipment with real policing and
+              crisis training, so your officers get the most out of it from day
+              one.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -372,7 +393,10 @@ export default function Home() {
   return (
     <>
       <title>
-        EVS Solutions | De-Escalation Training & Police Technology in Canada
+        {devOr(
+          "Police Training Technology & De-Escalation Training | EVS Solutions Canada",
+          "De-Escalation & Police Training | EVS Solutions Canada",
+        )}
       </title>
       <Hero />
       <Training />
@@ -381,7 +405,6 @@ export default function Home() {
       </DevOnly>
       <Approach />
       <Why />
-      <Testimonials />
       <DevOnly>
         <Procurement />
       </DevOnly>

@@ -40,7 +40,7 @@ export const manufacturers: Manufacturer[] = [
     name: "Street Smarts VR",
     shortName: "SSVR",
     website: "https://streetsmartsvr.com",
-    summary: "Immersive, first-person virtual reality training for law enforcement.",
+    summary: "Immersive virtual reality training that puts officers and frontline staff into realistic scenarios, from crisis calls to de-escalation, in a safe and repeatable environment.",
     relationship: "partner",
     about: [
       "Street Smarts VR (SSVR) is a hands-on virtual reality training platform. Officers train in realistic, first-person scenarios, and every repetition is captured with performance data so trainers can see progress and prove readiness.",
