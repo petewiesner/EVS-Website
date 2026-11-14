@@ -2,10 +2,11 @@ import { Quote } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Eyebrow } from "@/components/Eyebrow"
 import { DevNote } from "@/components/DevNote"
-import { testimonials } from "@/lib/testimonials"
+import { testimonials as all, type Testimonial } from "@/lib/testimonials"
 
 /** Hidden on the live site until lib/testimonials.ts has at least one approved entry. */
-export function Testimonials() {
+export function Testimonials({ section, title = "What clients say" }: { section?: Testimonial["section"]; title?: string }) {
+  const testimonials = section ? all.filter((t) => t.section === section) : all
   if (testimonials.length === 0) {
     return import.meta.env.DEV ? (
       <section className="py-12">
@@ -22,7 +23,7 @@ export function Testimonials() {
   return (
     <section className="bg-muted/40 py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <Eyebrow>What clients say</Eyebrow>
+        <Eyebrow>{title}</Eyebrow>
         <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Trusted by public safety professionals</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((t) => (

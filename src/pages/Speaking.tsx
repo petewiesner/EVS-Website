@@ -1,77 +1,156 @@
-import { BookOpen, Globe2, HeartHandshake, Flame, Quote } from "lucide-react"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CtaBand, PageHero } from "@/components/PageHero"
-import { contactLinks } from "@/lib/site"
+import { Link } from "react-router-dom";
+import { ArrowRight, Globe2, Phone, Watch } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { PageHero } from "@/components/PageHero";
+import { DevNote } from "@/components/DevNote";
+import speakingStage from "@/assets/photos/speaking-stage.webp"
+import youGoodShirt from "@/assets/photos/you-good-shirt.webp";
+import DevOnly from "@/components/DevOnly";
+import { contactLinks } from "@/lib/site";
 
-const pillars = [
-  {
-    icon: BookOpen,
-    title: "Storytelling Mastery",
-    text: "Pete weaves narratives that resonate deeply with listeners. His personal experiences, including overcoming adversity, dealing with trauma, and advocating for mental health, form the backbone of his powerful speeches. Through vivid anecdotes, he invites empathy and understanding.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Connecting with Audiences",
-    text: "Pete's charisma extends beyond the stage. He effortlessly establishes rapport with his listeners, making them feel seen and heard. His authenticity and vulnerability create an atmosphere of trust, allowing people to open up about their own struggles. His message becomes more than words: it becomes a lifeline for those who need it most.",
-  },
-  {
-    icon: Globe2,
-    title: "International Impact",
-    text: "Pete has graced stages across the globe, sharing his triumphs, challenges, and insights. From conference halls to community centres, his voice resonates, breaking down barriers and fostering conversations around mental health.",
-  },
-  {
-    icon: Flame,
-    title: "Passion and Purpose",
-    text: "Pete's commitment to his cause is unwavering. His passion for transparency about personal mental health is contagious. His journey from trauma survivor to advocate inspires others to seek help, support one another, and prioritize their well-being.",
-  },
-]
+const YouGood = () => (
+  <strong className="font-extrabold uppercase text-brand">YOU GOOD?</strong>
+);
 
 export default function Speaking() {
   return (
     <>
-      <title>Speaking Engagements | EVS Solutions</title>
-      <PageHero eyebrow="Speaking Engagements" title="Authentic stories that open conversations about mental health">
-        Pete Wiesner is a charismatic public speaker with an innate ability to captivate audiences of all sizes. His
-        talent lies not only in his storytelling but in his genuine interaction with the crowd, whether addressing a
-        small gathering or an international audience.
+      <title>You Good? | Public Speaking | EVS Solutions</title>
+      <PageHero eyebrow="Public Speaking" title="You Good?">
+        Mental health and suicide awareness, from a cop who has lived it.
       </PageHero>
 
       <section className="py-20">
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 md:grid-cols-2">
-          {pillars.map(({ icon: Icon, title, text }) => (
-            <Card key={title} className="transition-shadow hover:shadow-lg">
-              <CardHeader>
-                <div className="mb-3 flex size-12 items-center justify-center rounded-lg bg-brand/10 text-brand">
-                  <Icon className="size-6" />
-                </div>
-                <CardTitle className="text-xl">{title}</CardTitle>
-                <CardDescription className="text-base leading-relaxed">{text}</CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
+        <div className="mx-auto max-w-3xl space-y-5 px-4 text-lg leading-relaxed text-muted-foreground">
+          <p>
+            Among cops, "you good?" is never small talk. It means: something's
+            off, and we need to talk. Years ago, a supervisor and friend noticed
+            Pete wasn't okay, called him into his office and asked him exactly
+            that. Pete later realized those two words, <YouGood />, saved his
+            life.
+          </p>
+          <p>
+            In 2016, the job and life hit Pete all at once. Calls involving the
+            deaths of children, the breakdown of his marriage, the weight of the
+            job itself, from internal politics to an investigation that came at
+            the worst possible time, and one heavy loss after another piled up
+            until he was carrying more than anyone could see. It took a friend
+            noticing, and asking, to pull him back.
+          </p>
+          {import.meta.env.DEV && (
+            <DevOnly>
+              {import.meta.env.DEV && (
+                <DevNote>
+                  hidden until the Mills family gives their blessing to name
+                  Greg.
+                </DevNote>
+              )}
+              <p className="mt-4">
+                Years later, in 2023, Pete lost Greg Mills, a Hamilton police
+                officer, a recruit he had trained and a good friend, to suicide.
+                Greg was the twelfth officer Pete had lost to suicide in his
+                career. That loss took him straight back to 2016 and to the
+                question that saved him.
+              </p>
+            </DevOnly>
+          )}
+          <p>
+            Out of that came the You Good? presentation: a raw, honest and often
+            heart-wrenching talk. Built by a cop, it speaks to anyone who works
+            where trauma is part of the job: police officers, firefighters,
+            paramedics, nurses, hospital staff and others who see the worst days
+            of people's lives. No polished speeches or clinical slides, just
+            real stories told the way first responders talk to each other.
+          </p>
+          <p>
+            You Good? runs about an hour and can be delivered as a stand-alone
+            keynote or added to an EVS mental health training day. The message
+            is simple: learn when to ask, mean it when you do, and know how to
+            get help for yourself or the person beside you.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <img
+              src={speakingStage}
+              alt="Pete Wiesner presenting You Good? on stage at a conference"
+              className="w-full rounded-2xl object-cover shadow-lg"
+            />
+            <img
+              src={youGoodShirt}
+              alt="Pete Wiesner at a ballgame with a supporter wearing a You Good? shirt"
+              className="w-full rounded-2xl object-cover shadow-lg"
+            />
+          </div>
+          <Link
+            to={contactLinks.speaking}
+            className={buttonVariants({ size: "lg" })}
+          >
+            Book Pete to Speak <ArrowRight />
+          </Link>
         </div>
       </section>
 
-      <section className="bg-brand-accent/15 py-20">
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <Quote className="mx-auto size-10 text-brand" />
-          <p className="mt-6 text-lg text-muted-foreground">Pete's core message is simple and vital:</p>
-          <p className="mt-2 text-5xl font-extrabold tracking-tight text-brand-ink md:text-7xl">
-            It's okay to ask, <span className="text-brand">"YOU GOOD?"</span>
-          </p>
-          <p className="mx-auto mt-8 max-w-2xl text-muted-foreground">
-            Pete Wiesner's impactful presence, heartfelt storytelling, and dedication to mental health advocacy leave an
-            indelible mark on every audience fortunate enough to hear him speak.
-          </p>
+      <section className="bg-muted/40 py-20">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-2">
+          <div>
+            <Watch className="size-7 text-brand" />
+            <h2 className="mt-3 text-2xl font-bold tracking-tight">
+              Two bracelets, one message
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Every audience member receives two You Good? bracelets. One is
+              theirs to wear as a reminder to check in. The other is meant to be
+              given away to someone who isn't okay. One honest check-in might be
+              the one that saves a life.
+            </p>
+          </div>
+          <div>
+            <Globe2 className="size-7 text-brand" />
+            <h2 className="mt-3 text-2xl font-bold tracking-tight">
+              Where Pete has spoken
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Pete has delivered You Good? to thousands of police officers and
+              first responders, including at the last five CIT International
+              conferences, with audiences across Canada, the United States, the
+              Cayman Islands and Europe.
+            </p>
+          </div>
+        </div>
+        <div className="mx-auto mt-10 grid max-w-6xl gap-3 px-4">
+          {import.meta.env.DEV && (
+            <DevNote>
+              In the News: add the Hamilton Spectator article link once Pete
+              sends it.
+            </DevNote>
+          )}
+          {import.meta.env.DEV && (
+            <DevNote>add the YouTube highlight video once edited.</DevNote>
+          )}
+          {import.meta.env.DEV && (
+            <DevNote>
+              testimonials: Mel's quote is a draft awaiting approval. Add to
+              lib/testimonials.ts only once approved.
+            </DevNote>
+          )}
+          {import.meta.env.DEV && (
+            <DevNote>
+              small You Good? t-shirt shop goes here (confirmed by Pete; needs a
+              store provider).
+            </DevNote>
+          )}
         </div>
       </section>
 
-      <CtaBand
-        title="Book Pete for your next event"
-        text="Conferences, training days, community events and keynotes, in person or across borders."
-        to={contactLinks.speaking}
-        label="Enquire about speaking"
-      />
+      <section className="py-12">
+        <div className="mx-auto flex max-w-3xl items-center gap-4 rounded-xl border-l-4 border-brand bg-brand/5 p-6 px-4">
+          <Phone className="size-6 shrink-0 text-brand" />
+          <p className="text-sm">
+            <strong>Need to talk now?</strong> Call or text{" "}
+            <strong>9-8-8</strong>, the Canadian Suicide Crisis Helpline, any
+            time.
+          </p>
+        </div>
+      </section>
     </>
-  )
+  );
 }

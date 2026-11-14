@@ -1,45 +1,33 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { BUSINESS, PRIVACY_POLICY, contactLinks, routes } from "@/lib/site";
+import { BUSINESS, CREDENTIALS, FOUNDER_NAME, PRIVACY_POLICY, routes } from "@/lib/site";
 import logoDark from "@/assets/Logo-Plain-Dark.svg";
 import DevOnly from "./DevOnly";
 import React from "react";
 
 const columns = [
   {
-    title: "Training",
+    title: "Services",
     links: [
-      { to: routes.deEscalation, label: "De-Escalation Training" },
-      { to: routes.speaking, label: "Speaking Engagements" },
-      { to: "/#approach", label: "Policing Consulting", devOnly: true },
+      { to: routes.training, label: "Training" },
+      { to: routes.speaking, label: "Public Speaking" },
+      { to: routes.distribution, label: "Distribution", devOnly: true },
+      { to: routes.consulting, label: "Consulting" },
     ],
-  },
-  {
-    title: "Technology",
-    links: [
-      { to: routes.technology, label: "Police Technology" },
-      { to: contactLinks.quote, label: "Request a Quote" },
-      {
-        to: contactLinks.manufacturer,
-        label: "For Manufacturers",
-        devOnly: false,
-      },
-    ],
-    devOnly: true,
   },
   {
     title: "Company",
     links: [
       { to: routes.about, label: "About" },
-      { to: routes.contact, label: "Contact", devOnly: false },
+      { to: routes.contact, label: "Contact" },
     ],
   },
-];
+] as { title: string; devOnly?: boolean; links: { to: string; label: string; devOnly?: boolean }[] }[];
 
 export function Footer() {
   return (
     <footer className="bg-brand-ink text-white/70">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-[1.5fr_1.5fr_1fr_1fr]">
         <div>
           <Link to={routes.home}>
             <img src={logoDark} alt="EVS Solutions" className="h-14 w-auto" />
@@ -64,6 +52,14 @@ export function Footer() {
               </a>
             )}
           </div>
+        </div>
+        <div className="text-sm">
+          <p className="font-semibold text-white">{FOUNDER_NAME}</p>
+          <ul className="mt-2 space-y-1 text-xs">
+            {CREDENTIALS.map((c) => (
+              <li key={c}>{c}</li>
+            ))}
+          </ul>
         </div>
         {columns.map((c) => {
           const Wrapper = c.devOnly ? DevOnly : React.Fragment;

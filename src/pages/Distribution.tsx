@@ -141,14 +141,21 @@ function ManufacturerSection({ m, index }: { m: Manufacturer; index: number }) {
   )
 }
 
-export default function Technology() {
+export default function Distribution() {
   return (
     <>
-      <title>Police Technology Distribution in Canada | EVS Solutions</title>
-      <PageHero eyebrow="Police technology" title="Proven police technology, supplied by a Canadian partner">
-        EVS Solutions is the Canadian distribution partner for police technology companies without a Canadian footprint.
-        Agencies buy locally through formal quotes and purchase orders, with Canadian setup and support.
+      <title>Distribution | EVS Solutions</title>
+      <PageHero eyebrow="Distribution" title="Proven technology for Canadian public safety">
+        EVS Solutions connects Canadian police services and public safety agencies with technology that helps frontline
+        teams train smarter and work safer. Backed by 30 years of law enforcement experience, we understand how agencies
+        operate, what they need and how they buy. We don't just deliver equipment; we help your team put it to work.
       </PageHero>
+      <div className="mx-auto max-w-6xl px-4 pt-8">
+        <DevNote>
+          whole page is dev-only (partnerships not public yet). Pete to get written permission from SSVR for logo/product
+          photos and consent from anyone in training photos.
+        </DevNote>
+      </div>
 
       <section className="py-16">
         <div className="mx-auto max-w-6xl px-4">

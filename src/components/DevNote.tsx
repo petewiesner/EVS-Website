@@ -21,3 +21,16 @@ export function DevNote({ children }: { children: ReactNode }) {
     </DevOnly>
   );
 }
+
+/** A photo still awaiting consent. Renders only in dev, with who needs to sign off. */
+export function PendingPhoto({ photo, className = "" }: { photo: { src: string; alt: string; consentFrom: string }; className?: string }) {
+  if (!import.meta.env.DEV || !photo.src) return null
+  return (
+    <figure className={className}>
+      <img src={photo.src} alt={photo.alt} className="w-full rounded-2xl object-cover shadow-lg" />
+      <figcaption className="mt-2 text-xs text-brand-ink">
+        <span className="font-semibold">Consent needed (dev only):</span> {photo.consentFrom}
+      </figcaption>
+    </figure>
+  )
+}

@@ -23,10 +23,12 @@ export const PRIVACY_POLICY = "/privacy-policy.pdf";
 
 export const routes = {
   home: "/",
-  technology: "/technology",
+  training: "/training",
+  speaking: "/you-good",
+  /** Partner/distribution content: dev only until partnerships can be public. */
+  distribution: "/distribution",
+  consulting: "/consulting",
   about: "/about",
-  speaking: "/speaking-engagements",
-  deEscalation: "/de-escalation",
   contact: "/contact",
 } as const;
 
@@ -36,20 +38,27 @@ export const contactLinks = {
   demo: `${routes.contact}?topic=demo`,
   manufacturer: `${routes.contact}?topic=manufacturer`,
   training: `${routes.contact}?topic=training`,
+  mentorship: `${routes.contact}?topic=mentorship`,
   speaking: `${routes.contact}?topic=speaking`,
+  consulting: `${routes.contact}?topic=consulting`,
 } as const;
 
 export const contactTopics: Record<string, string> = {
   quote: "Request a quote",
   demo: "Book a demo",
-  manufacturer: "Canadian distribution partnership",
-  training: "Training enquiry",
-  speaking: "Speaking engagement enquiry",
+  manufacturer: "Become a partner",
+  training: "Training consultation",
+  mentorship: "Mentorship session",
+  speaking: "Book Pete to speak",
+  consulting: "Consulting enquiry",
 };
 
+/** The four sections from Pete's content brief, in order. */
 export const nav = [
-  { to: "/#training", label: "Training" },
-  { to: routes.technology, label: "Technology", devOnly: true },
+  { to: routes.training, label: "Training" },
+  { to: routes.speaking, label: "Public Speaking" },
+  { to: routes.distribution, label: "Distribution", devOnly: true },
+  { to: routes.consulting, label: "Consulting" },
   { to: routes.about, label: "About" },
 ];
 
@@ -74,6 +83,15 @@ export interface TimelineJob {
 }
 
 export const FOUNDER_NAME = "Pete Wiesner";
+
+/** Footer credentials block, from Pete's brief. */
+export const CREDENTIALS = [
+  "Founder & Principal Consultant, EVS Solutions",
+  "Retired Sergeant, Hamilton Police Service",
+  "Mental Health & De-escalation Subject Matter Expert",
+  "CIT International Master Trainer",
+  "Laurier MHCR Cadre Instructor",
+];
 
 /**
  * The founder's career timeline on the About page, oldest job first.
@@ -109,7 +127,8 @@ export const CAREER: TimelineJob[] = [
       },
     ],
   },
-  {
+  // Partnership: dev only until partnerships can be public.
+  ...(import.meta.env.DEV ? [{
     name: "Street Smarts VR",
     start: "2024",
     end: "Present",
@@ -137,7 +156,7 @@ export const CAREER: TimelineJob[] = [
           "Leading the service's mental health crisis response to close his career.",
       },
     ],
-  },
+  }] : []),
 ];
 
 /** "2001–2024", or just "2001" when start and end are the same. */
@@ -149,3 +168,11 @@ export const yearsIn = (job: TimelineJob) => {
   const year = (s: string) => Number(s.match(/\d{4}/)?.[0]);
   return year(job.end) - year(job.start);
 };
+
+/** Pete's recognition; shown on Consulting and About. */
+export const AWARDS = [
+  "2023 CACP–Motorola Solutions Community Safety and Well-Being Award",
+  "Leonard G. Lawrence Award (2012 and 2021)",
+  "YMCA Peace Medal (2019)",
+  "Sixteen Level 1 and two Level 2 commendations with the Hamilton Police Service",
+]
