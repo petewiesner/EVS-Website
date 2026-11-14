@@ -11,6 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import { nav, routes } from "@/lib/site";
 import logoPlain from "@/assets/Logo-Plain.svg";
+import bulb from "@/assets/Bulb.svg";
 import DevOnly from "./DevOnly";
 
 // Hash links ("/#services") are never "active"; page links highlight on their own route.
@@ -28,7 +29,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <Link to={routes.home} className="flex items-center">
+        <Link to={routes.home} className="flex items-center gap-2">
+          <img src={bulb} alt="" className="h-8 w-auto" />
           <img src={logoPlain} alt="EVS Solutions" className="h-8 w-auto" />
         </Link>
 

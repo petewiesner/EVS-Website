@@ -10,7 +10,6 @@ import { ProcurementSignals } from "@/components/ProcurementSignals"
 import { AWARDS, BUSINESS, CAREER, FOUNDER_NAME, dateRange, routes, yearsIn } from "@/lib/site"
 
 const policing = CAREER[0]
-import bulb from "@/assets/Bulb.svg"
 import headshot from "@/assets/pete-headshot.webp"
 
 const values = [
@@ -60,18 +59,21 @@ export default function About() {
                   {job.name}, {dateRange(job.start, job.end)}
                 </h3>
                 <ol className="mt-5 space-y-5 border-l-2 border-brand-accent pl-6">
-                  {job.details.map((d) => (
-                    <li key={d.title} className="relative">
-                      <span className="absolute -left-7.75 top-1.5 size-3 rounded-full bg-brand ring-4 ring-background" />
-                      <p className="font-semibold text-foreground">
-                        {d.title}
-                        {(d.start || d.end) && (
-                          <span className="ml-2 text-sm font-normal text-muted-foreground">{dateRange(d.start, d.end)}</span>
-                        )}
-                      </p>
-                      <p className="text-sm text-muted-foreground">{d.description}</p>
-                    </li>
-                  ))}
+                  {job.details.map((d) => {
+                    const title = <p className="font-semibold text-foreground group-hover/link:underline">
+                      {d.title}
+                      {(d.start || d.end) && (
+                        <span className="ml-2 text-sm font-normal text-muted-foreground">{dateRange(d.start, d.end)}</span>
+                      )}
+                    </p>
+                    return (
+                      <li key={d.title} className="relative">
+                        <span className="absolute -left-7.75 top-1.5 size-3 rounded-full bg-brand ring-4 ring-background" />
+                        {d.link ? <Link to={d.link} target="_blank" className="group/link">
+                          {title}</Link> : title}
+                        <p className="text-sm text-muted-foreground">{d.description}</p>
+                      </li>)
+                  })}
                 </ol>
               </div>
             ))}
@@ -91,13 +93,12 @@ export default function About() {
               alt={`${FOUNDER_NAME}, founder of EVS Solutions`}
               className="aspect-square w-full object-cover"
             />
-            <figcaption className="flex items-center gap-4 p-5">
-              <img src={bulb} alt="" className="h-10 w-auto" />
+            <figcaption className="p-5">
               <div>
                 <p className="font-semibold">{FOUNDER_NAME}</p>
                 <p className="text-sm text-white/70">Founder & Principal Consultant • EVS Solutions</p>
-                {[...CAREER].reverse().map((c, i) => 
-                <p key={i} className="text-[10px] text-white/50">{[c.position, c.name].filter(Boolean).join(" • ")} ({dateRange(c.start, c.end)})</p>
+                {[...CAREER].filter(j => !!j.position).reverse().map((c, i) =>
+                  <p key={i} className="text-[10px] text-white/50">{[c.position, c.name].filter(Boolean).join(" • ")} ({dateRange(c.start, c.end)})</p>
                 )}
                 <p className="mt-1 flex items-center gap-1 text-xs text-white/60">
                   <MapPin className="size-3" /> {BUSINESS.city}, {BUSINESS.province}

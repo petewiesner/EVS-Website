@@ -68,6 +68,7 @@ export interface TimelineDetail {
   /** Optional dates, free text so months work too, e.g. "2015" or "March 2015". */
   start?: string;
   end?: string;
+  link?: string
 }
 
 export interface TimelineJob {
@@ -112,51 +113,52 @@ export const CAREER: TimelineJob[] = [
       {
         title: "Detective, Vice and Drugs",
         description: "Investigative work in vice and drug enforcement.",
-        start: "2007",
+        start: "2006",
         end: "2011",
       },
       {
         title: "ACTION Team",
         description:
           "Focused on intervention, prevention, enforcement and community mobilization in Hamilton's most vulnerable neighbourhoods.",
+        start: "2013",
+        end: "2016"
       },
       {
         title: "Supervisor, Crisis Response Branch",
         description:
           "Leading the service's mental health crisis response to close his career.",
+        start: "2016",
+        end: "2024"
       },
     ],
   },
-  // Partnership: dev only until partnerships can be public.
-  ...(import.meta.env.DEV ? [{
-    name: "Street Smarts VR",
+  {
+    name: "Post-Policing",
     start: "2024",
     end: "Present",
-    position: "Canadian Business Development Lead",
     details: [
       {
-        title: "Uniformed Patrol Constable",
-        description: "Where his career began, on the front line.",
-        start: "Sept. 2001",
+        title: "Street Smarts VR",
+        description: "Canadian Sales Lead / Distribution & Training.",
+        link: "https://streetsmartsvr.com"
       },
       {
-        title: "Detective, Vice and Drugs",
-        description: "Investigative work in vice and drug enforcement.",
-        start: "2007",
-        end: "2011",
+        title: "Wilfrid Laurier University",
+        description: "MHCR Cadre Instructor / SME on Mental Health & De-Escalation.",
+        link: "https://www.wlu.ca/academics/faculties/faculty-of-human-and-social-sciences/centre-for-public-safety-and-well-being/mental-health-crisis-response/index.html"
       },
       {
-        title: "ACTION Team",
-        description:
-          "Focused on intervention, prevention, enforcement and community mobilization in Hamilton's most vulnerable neighbourhoods.",
+        title: "CIT International",
+        description: "Master T3 Instructor / SME on Mental Health & De-Escalation.",
+        link: "https://citinternational.org"
       },
       {
-        title: "Supervisor, Crisis Response Branch",
-        description:
-          "Leading the service's mental health crisis response to close his career.",
-      },
+        title: "Mohawk College",
+        description: "Part-time Professor in the Police Foundations program.",
+        link: "https://www.mohawkcollege.ca/programs/community-services/police-foundations"
+      }
     ],
-  }] : []),
+  },
 ];
 
 /** "2001–2024", or just "2001" when start and end are the same. */

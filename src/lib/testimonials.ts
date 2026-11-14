@@ -27,6 +27,6 @@ export const testimonials: Testimonial[] = [
     quote:
       "Having run for office himself, Pete brought real professionalism and insight to my campaign. His guidance helped me win Ward 9 councillor in the 2026 municipal election.",
     name: "Jonathan Stathakos",
-    role: "Ward 9 Councillor",
+    role: "Ward 9 Councillor - Hamilton, ON",
   },
 ]
